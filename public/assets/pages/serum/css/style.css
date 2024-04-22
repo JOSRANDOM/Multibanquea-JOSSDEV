@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+  }
+
+  button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+
+  button:hover {
+    border-color: #646cff;
+  }
+
+  button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  #container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* 2/3 para el mapa, 1/3 para el sidebar */
+    gap: 10px;
+    /* Espacio entre el mapa y el sidebar */
+  }
+
+  #map {
+    grid-column: 1;
+    /* Ocupa solo la primera columna */
+    height: 600px;
+  }
+
+
+  #sidebar-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Una columna para Leyendas */
+    gap: 10px;
+    /* Espacio entre las dos columnas */
+  }
+
+  .sidebar-content-section {
+    grid-column: span 1;
+    /* Ocupa solo la primera columna */
+  }
+
+  .js-example-basic-single {
+    width: 100%;
+    /* Puedes ajustar el valor según tus necesidades */
+  }
+
+  /* ... (código anterior) ... */
+
+  #searchInputContainer {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: center;
+    /* Alinea los elementos verticalmente en el centro */
+  }
+
+  #searchInput {
+    display: flex;
+    justify-content: flex-end;
+
+  }
+
+  #searchButton {
+    background-color: #0e76e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    padding: 0 10px;
+    margin-left: 10px;
+
+  }
+  #leyendaProfesionales {
+    margin-bottom: 5px;
+    overflow: hidden;
+    max-height: 150px; /* Ajustar tamaño de scroll */
+    overflow-y: auto;
+  }
+
+  #leyendas-info {
+    margin-top: 5px;
+  }

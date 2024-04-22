@@ -1,0 +1,49 @@
+// Color system ----------------------------------------------------------------
+
+$primary: #02555b;
+
+// Options ---------------------------------------------------------------------
+
+$enable-negative-margins: true;
+
+// Spacing ---------------------------------------------------------------------
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer / 4,
+  2: $spacer / 2,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4.5,
+  7: $spacer * 7,
+);
+
+// Components ------------------------------------------------------------------
+
+$border-radius: 1rem;
+$border-radius-sm: 0.75rem;
+
+// Typography ------------------------------------------------------------------
+
+$font-family-sans-serif: "Poppins", verdana, "Trebuchet MS", helvetica, arial,
+  tahoma, sans-serif;
+
+$font-weight-normal: 300;
+$font-weight-bold: 600;
+$font-weight-bolder: $font-weight-bold;
+
+$headings-font-family: $font-family-sans-serif;
+$headings-font-weight: $font-weight-bold;
+
+// Buttons ---------------------------------------------------------------------
+
+$btn-border-radius: $border-radius;
+$btn-border-radius-sm: $border-radius-sm;
+$btn-border-radius-lg: $border-radius;
+
+// Cards -----------------------------------------------------------------------
+
+$card-spacer-x: $spacer * 1.5;
+$card-spacer-y: $spacer * 1.5;

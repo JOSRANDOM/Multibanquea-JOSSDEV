@@ -1,0 +1,39 @@
+/*BOTON DE INGRESO - ENARE*/
+
+.btn-primary-v2 {
+    color: #fff;
+    background-color: #ff6600; /* Cambiar el color de fondo a un tono más vivo */
+    border-color: #ff6600; /* Cambiar el color del borde al mismo tono más vivo */
+  }
+  
+  .btn-primary-v2:hover {
+    background-color: #cc5500; /* Cambiar el color de fondo al tono más claro al pasar el cursor */
+    border-color: #cc5500; /* Cambiar el color del borde al mismo tono más claro */
+  }
+  
+  .btn-primary-v2:focus,
+  .btn-primary-v2.focus {
+    background-color: #cc5500; /* Cambiar el color de fondo al tono más claro al enfocarse */
+    border-color: #cc5500; /* Cambiar el color del borde al mismo tono más claro */
+    box-shadow: 0 0 0 0.2rem rgba(255, 102, 0, 0.5); /* Cambiar el color de la sombra al mismo tono más claro */
+  }
+  
+  .btn-primary-v2.disabled,
+  .btn-primary-v2:disabled {
+    background-color: #ff6600; /* Mantener el mismo color de fondo para los estados de deshabilitado */
+    border-color: #ff6600; /* Mantener el mismo color de borde para los estados de deshabilitado */
+  }
+  
+  .btn-primary-v2:not(:disabled):not(.disabled):active,
+  .btn-primary-v2:not(:disabled):not(.disabled).active,
+  .show > .btn-primary-v2.dropdown-toggle {
+    background-color: #cc5500; /* Cambiar el color de fondo al tono más claro al hacer clic */
+    border-color: #cc5500; /* Cambiar el color del borde al mismo tono más claro */
+  }
+  
+  .btn-primary-v2:not(:disabled):not(.disabled):active:focus,
+  .btn-primary-v2:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-primary-v2.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 102, 0, 0.5); /* Cambiar el color de la sombra al mismo tono más claro */
+  }
+  
