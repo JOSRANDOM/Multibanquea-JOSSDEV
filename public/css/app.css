@@ -15974,3 +15974,36 @@ fieldset:disabled .btn {
   background-color: white;
 }
 
+/* Estilos para el contenedor del calendario */
+.calendar-container {
+  background-color: #f8f9fa; /* Fondo gris claro */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+}
+
+/* Estilos para los encabezados de los días */
+.fc-day-header {
+  background-color: #e9ecef; /* Fondo gris claro */
+  border: none; /* Sin borde */
+  text-align: center; /* Centrar texto */
+  padding: 10px; /* Espaciado interno */
+}
+
+/* Estilos para los días del calendario */
+.fc-day {
+  background-color: #ffffff; /* Fondo blanco */
+  border: 1px solid #dee2e6; /* Borde gris claro */
+  padding: 10px; /* Espaciado interno */
+}
+
+/* Estilos para los eventos del calendario */
+.fc-event {
+  background-color: #007bff; /* Fondo azul */
+  color: #ffffff; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 4px 8px; /* Espaciado interno */
+  margin-bottom: 4px; /* Margen inferior */
+}
+
+

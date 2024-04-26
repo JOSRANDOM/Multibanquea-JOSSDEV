@@ -1,0 +1,52 @@
+@extends('layouts.app')
+
+@section('styles')
+<link href="{{ asset('/css/calendar.css') }}" rel="stylesheet">
+@endsection
+
+@section('content')
+<div class="container">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-boton">
+        <h1 style="color: white;">HORARIO DE ENTRENAMIENTO</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{{ route('home') }}" class="btn btn-danger">
+                    <i class="bi bi-arrow-return-left"></i> Regresar
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="calendar-container"> <!-- Contenedor adicional para el calendario -->
+        <div id="calendar"></div>
+    </div>
+</div>
+    
+@endsection
+
+@section('inline_scripts')
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/es.js'></script> <!-- Agregamos el archivo de idioma en español -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        themeSystem: 'bootstrap', // Utilizamos el tema Bootstrap por defecto
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        eventColor: 'blue', // Cambiamos el color de los eventos a azul
+        backgroundColor: 'lightgray', // Cambiamos el color de fondo del calendario a gris claro
+        
+    });
+    calendar.render();
+});
+
+</script>
+@endsection

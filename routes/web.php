@@ -243,7 +243,7 @@ Route::name('my-account.')
 Route::name('training.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/training',[TrainingController::class,'index'])->name('');
+        Route::get('/training',[TrainingController::class,'index'])->name('index');
     });
 
 /**
