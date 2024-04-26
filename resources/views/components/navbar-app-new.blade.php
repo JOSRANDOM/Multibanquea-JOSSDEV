@@ -66,7 +66,7 @@
             @endif
             <li class="nav-item mb-2 w-100">
                 <a href="{{ route('training.index') }}" class="nav-link align-middle text-white">
-                  <i class="fs-4 bi-person-fill"></i> <span class="ms-1 d-sm-inline">Entrenamiento Personalizado</span>
+                    <i class="bi bi-calendar-range"></i> <span class="ms-1 d-sm-inline">Entrenamiento Personalizado</span>
                 </a>
             </li>
             <li class="nav-item mb-2 w-100 {{ Request::is('mi-cuenta*') ? 'active' : '' }}">
