@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container pt-3 pb-2 mb-3 ">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-boton">
-        <h1 style="color: white;">HORARIO DE ENTRENAMIENTO</h1>
+        <h1 style="color: white;">HORARIO DE ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <a href="{{ route('home') }}" class="btn btn-danger">
@@ -21,11 +21,12 @@
     </div>
 </div>
 
+<!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Selecciona los días que quieres entrenar</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Selecciona los días de entrenamiento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-body" aria-labelledby="exampleModalLabel">
@@ -46,9 +47,14 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <!-- Botón de aceptar -->
+                <button type="button" class="btn btn-primary" onclick="acceptSelection()"> <i class="bi bi-check"></i> Aceptar</button>
+            </div>
         </div>
     </div>
 </div>
+
 
 
 
