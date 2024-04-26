@@ -34,6 +34,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Pages\SerumController;
 use App\Http\Controllers\performanceController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -232,6 +233,17 @@ Route::name('my-account.')
         Route::post('/mi-cuenta/cambiar-nombre', [UserController::class, 'updateName'])->name('update-name');
         Route::post('/mi-cuenta/cambiar-telefono', [UserController::class, 'updatePhone'])->name('update-phone');
         Route::post('/mi-cuenta/actualizar-contraseña', [UserController::class, 'updatePassword'])->name('update-password');
+    });
+/**
+ * -----------------------------------------------------------------------------
+ * Training - personalized
+ * -----------------------------------------------------------------------------
+ */
+
+Route::name('training.')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/training',[TrainingController::class,'index'])->name('');
     });
 
 /**
