@@ -18,4 +18,8 @@ class TrainingController extends Controller
         // Retornar la vista de entrenamiento pasando la respuesta como datos
         return view('training.index', ['response' => $response]);
     }
+
+    public function display(){
+        return view('training.display');
+    }
 }

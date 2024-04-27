@@ -71,13 +71,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
+        initialView: 'dayGridMonth',
         locale: 'es',
         themeSystem: 'bootstrap', // Utilizamos el tema Bootstrap por defecto
         headerToolbar: {
-            left: 'prev,next today',
+            left: 'prev, today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'next'
         },
         eventColor: 'blue', // Cambiamos el color de los eventos a azul
         backgroundColor: 'lightgray', // Cambiamos el color de fondo del calendario a gris claro

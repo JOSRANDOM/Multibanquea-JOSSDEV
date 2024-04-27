@@ -244,6 +244,7 @@ Route::name('training.')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/training',[TrainingController::class,'index'])->name('index');
+        Route::get('/training/display',[TrainingController::class,'display'])->name('display');
     });
 
 /**

@@ -16006,4 +16006,10 @@ fieldset:disabled .btn {
   margin-bottom: 4px; /* Margen inferior */
 }
 
+.custom-container {
+  border-radius: 10px; /* Bordes redondos */
+  background-color: white; /* Fondo blanco */
+  padding: 10px; /* Espaciado interior */
+}
+
 
