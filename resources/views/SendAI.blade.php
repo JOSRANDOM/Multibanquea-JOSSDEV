@@ -62,38 +62,39 @@
         // Mostrar la ventana emergente al hacer clic en el botón de días de la semana
         $('#daysModal').modal('show');
 
-        // Cuando se haga clic en "Programar"
         $('#daysModal button.btn-primary').click(function() {
-            // Obtener días seleccionados
-            var selectedDays = [];
-            $('#daysModal .btn.active').each(function() {
-                selectedDays.push($(this).text());
+        // Obtener días seleccionados
+        var selectedDays = [];
+        $('#daysModal .btn.active').each(function() {
+            selectedDays.push($(this).text());
+        });
+
+        // Obtener categorías
+        var categories = [];
+        @foreach ($response->json() as $item)
+            @if ($item['nota'] < 10)
+                categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
+            @endif
+        @endforeach
+
+        // Distribuir las categorías entre los días seleccionados
+        var events = [];
+        var dayIndex = 0;
+        for (var i = 0; i < categories.length; i++) {
+            var selectedDay = selectedDays[dayIndex % selectedDays.length];
+            var currentDate = moment().startOf('month').day(selectedDay);
+            var eventDate = currentDate.add(Math.floor(i / selectedDays.length), 'weeks').format("YYYY-MM-DD");
+            events.push({
+                title: categories[i],
+                start: eventDate,
+                allDay: true
             });
+            dayIndex++; // Incrementar el índice del día
+        }
 
-            // Obtener categorías
-            var categories = [];
-            @foreach ($response->json() as $item)
-                @if ($item['nota'] < 10)
-                    categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
-                @endif
-            @endforeach
+        // Agregar eventos al calendario
+        calendar.addEventSource(events);
 
-            // Distribuir las categorías entre los días seleccionados
-            var events = [];
-            for (var i = 0; i < categories.length; i++) {
-                var selectedDay = selectedDays[i % selectedDays.length]; // Ciclo entre los días seleccionados
-                var currentDate = moment().startOf('month').day(selectedDay); // Obtener la fecha del primer día del mes correspondiente al día seleccionado
-                var eventDate = currentDate.add(Math.floor(i / selectedDays.length), 'weeks').format("YYYY-MM-DD"); // Agregar semanas según el índice
-
-                events.push({
-                    title: categories[i],
-                    start: eventDate,
-                    allDay: true
-                });
-            }
-
-            // Agregar eventos al calendario
-            calendar.addEventSource(events);
         });
 
     });
