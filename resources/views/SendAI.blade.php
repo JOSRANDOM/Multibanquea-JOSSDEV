@@ -51,18 +51,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'es',
-            events: [] // Inicialmente, no hay eventos
-        });
-        calendar.render();
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        events: [] // Inicialmente, no hay eventos
+    });
+    calendar.render();
 
-        // Mostrar la ventana emergente al hacer clic en el botón de días de la semana
-        $('#daysModal').modal('show');
+    // Mostrar la ventana emergente al hacer clic en el botón de días de la semana
+    $('#daysModal').modal('show');
 
-        $('#daysModal button.btn-primary').click(function() {
+    $('#scheduleBtn').click(function() {
         // Obtener días seleccionados
         var selectedDays = [];
         $('#daysModal .btn.active').each(function() {
@@ -79,25 +79,29 @@
 
         // Distribuir las categorías entre los días seleccionados
         var events = [];
-        var dayIndex = 0;
-        for (var i = 0; i < categories.length; i++) {
-            var selectedDay = selectedDays[dayIndex % selectedDays.length];
+        var categoriesIndex = 0;
+        selectedDays.forEach(function(selectedDay) {
             var currentDate = moment().startOf('month').day(selectedDay);
-            var eventDate = currentDate.add(Math.floor(i / selectedDays.length), 'weeks').format("YYYY-MM-DD");
-            events.push({
-                title: categories[i],
-                start: eventDate,
-                allDay: true
-            });
-            dayIndex++; // Incrementar el índice del día
-        }
+            var currentEvents = [];
+            while (categoriesIndex < categories.length) {
+                currentEvents.push({
+                    title: categories[categoriesIndex],
+                    start: currentDate.format("YYYY-MM-DD"),
+                    allDay: true
+                });
+                currentDate.add(1, 'week');
+                categoriesIndex++;
+            }
+            events = events.concat(currentEvents);
+        });
 
         // Agregar eventos al calendario
         calendar.addEventSource(events);
 
-        });
-
     });
+
+});
+
     </script>
 </body>
 </html>
