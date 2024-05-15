@@ -37,7 +37,7 @@ class PerformanceController extends Controller
                 INNER JOIN " . $dbName . ".question_subcategories AS subcategorias ON preguntas.question_subcategory_id = subcategorias.id
             WHERE
                 examenes.user_id = :user_id
-        ", ['user_id' => '3568']);
+        ", ['user_id' => '3758']);
     
         // Formatear los resultados en el formato JSON requerido
         $formattedResults = [];
