@@ -47,10 +47,12 @@
                     </div>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <!-- Botón de aceptar -->
                 <button type="button" class="btn btn-primary" onclick="acceptSelection()"> <i class="bi bi-check"></i> Aceptar</button>
             </div>
+            
         </div>
     </div>
 </div>

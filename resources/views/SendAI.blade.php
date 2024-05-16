@@ -33,14 +33,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="btn-group" role="group" aria-label="Días de la semana">
-                        <button type="button" class="btn btn-primary" id="lunesBtn" onclick="highlightButton(this)">Lunes</button>
-                        <button type="button" class="btn btn-primary" id="martesBtn" onclick="highlightButton(this)">Martes</button>
-                        <button type="button" class="btn btn-primary" id="miercolesBtn" onclick="highlightButton(this)">Miércoles</button>
-                        <button type="button" class="btn btn-primary" id="juevesBtn" onclick="highlightButton(this)">Jueves</button>
-                        <button type="button" class="btn btn-primary" id="viernesBtn" onclick="highlightButton(this)">Viernes</button>
-                        <button type="button" class="btn btn-primary" id="sabadoBtn" onclick="highlightButton(this)">Sábado</button>
-                        <button type="button" class="btn btn-primary" id="domingoBtn" onclick="highlightButton(this)">Domingo</button>
+                    <div class="container">
+                        <div class="btn-group" role="group" aria-label="Días de la semana">
+                            <button type="button" class="btn btn-primary" id="lunesBtn" onclick="highlightButton(this)">Lunes</button>
+                            <button type="button" class="btn btn-primary" id="martesBtn" onclick="highlightButton(this)">Martes</button>
+                            <button type="button" class="btn btn-primary" id="miercolesBtn" onclick="highlightButton(this)">Miércoles</button>
+                            <button type="button" class="btn btn-primary" id="juevesBtn" onclick="highlightButton(this)">Jueves</button>
+                            <button type="button" class="btn btn-primary" id="viernesBtn" onclick="highlightButton(this)">Viernes</button>
+                            <button type="button" class="btn btn-primary" id="sabadoBtn" onclick="highlightButton(this)">Sábado</button>
+                            <button type="button" class="btn btn-primary" id="domingoBtn" onclick="highlightButton(this)">Domingo</button>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -115,7 +115,7 @@ class PerformanceController extends Controller
         $response = Http::post($url, $formattedResults);
     
         // Retornar la vista con los datos y la respuesta del servicio
-        return view('SendAI', [
+        return view('training.IA', [
             'formattedResults' => $formattedResults,
             'response' => $response
         ]);
