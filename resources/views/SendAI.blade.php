@@ -7,7 +7,7 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css' rel='stylesheet' />
 </head>
 <body>
-    <h1>Calendario de Categorías</h1>
+    <h1>Calendario de Categorías <span id="selectedDays"></span></h1>
 
     <div id='calendar'></div>
 
@@ -45,10 +45,18 @@
     <script>
             var selectedDay = null; // Variable para almacenar el día seleccionado
 
-        function highlightButton(button) {
+            function highlightButton(button) {
             $(button).toggleClass('active');
             selectedDay = $(button).text(); // Almacenar el día seleccionado
+
+            // Obtener los días seleccionados y mostrarlos junto al título del calendario
+            var selectedDays = [];
+            $('#daysModal .btn.active').each(function() {
+                selectedDays.push($(this).text());
+            });
+            $('#selectedDays').text('(' + selectedDays.join(', ') + ')');
         }
+
 
         document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -63,44 +71,57 @@
     $('#daysModal').modal('show');
 
     $('#scheduleBtn').click(function() {
-        // Obtener días seleccionados
-        var selectedDays = [];
-        $('#daysModal .btn.active').each(function() {
-            selectedDays.push($(this).text());
-        });
+    console.log("Botón 'Programar' presionado");
 
-        // Obtener categorías
-        var categories = [];
-        @foreach ($response->json() as $item)
-            @if ($item['nota'] < 10)
-                categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
-            @endif
-        @endforeach
-
-        // Distribuir las categorías entre los días seleccionados
-        var events = [];
-        var categoriesIndex = 0;
-        selectedDays.forEach(function(selectedDay) {
-            var currentDate = moment().startOf('month').day(selectedDay);
-            var currentEvents = [];
-            while (categoriesIndex < categories.length) {
-                currentEvents.push({
-                    title: categories[categoriesIndex],
-                    start: currentDate.format("YYYY-MM-DD"),
-                    allDay: true
-                });
-                currentDate.add(1, 'week');
-                categoriesIndex++;
-            }
-            events = events.concat(currentEvents);
-        });
-
-        // Agregar eventos al calendario
-        calendar.addEventSource(events);
-
+    // Obtener días seleccionados
+    var selectedDays = [];
+    $('#daysModal .btn.active').each(function() {
+        selectedDays.push($(this).text());
     });
+    console.log("Días seleccionados:", selectedDays);
 
-});
+    // Obtener categorías
+    var categories = [];
+    @foreach ($response->json() as $item)
+        @if ($item['nota'] < 10)
+            categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
+        @endif
+    @endforeach
+    console.log("Categorías:", categories);
+
+        // Mapeo de nombres de días en inglés a español
+        var daysMapping = {
+            "Monday": "Lunes",
+            "Tuesday": "Martes",
+            "Wednesday": "Miércoles",
+            "Thursday": "Jueves",
+            "Friday": "Viernes",
+            "Saturday": "Sábado",
+            "Sunday": "Domingo"
+        };
+
+        // Distribuir las categorías solo en los días seleccionados
+        var events = [];
+        var currentDate = moment().startOf('month');
+        while (currentDate.month() == moment().month()) {
+            var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
+            if (selectedDays.includes(dayName)) {
+                categories.forEach(function(category) {
+                    events.push({
+                        title: category,
+                        start: currentDate.format("YYYY-MM-DD"),
+                        allDay: true
+                    });
+                });
+            }
+            currentDate.add(1, 'day');
+        }
+        console.log("Eventos a agregar:", events);
+            // Agregar eventos al calendario
+            calendar.addEventSource(events);
+        });
+
+        });
 
     </script>
 </body>
