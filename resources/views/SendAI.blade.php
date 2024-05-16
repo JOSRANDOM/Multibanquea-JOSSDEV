@@ -12,6 +12,9 @@
             <h1 style="color: black;">HORARIO DE ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
+                    <button type="button" class="btn btn-success" id="newScheduleBtn">
+                        <i class="bi bi-plus"></i> Nuevo Horario
+                    </button>
                     <a href="{{ route('home') }}" class="btn btn-danger">
                         <i class="bi bi-arrow-return-left"></i> Regresar
                     </a>
@@ -23,6 +26,25 @@
         <div class="calendar-container"> <!-- Contenedor adicional para el calendario -->
             <div id="calendar"></div>
         </div>
+
+            <!-- Ventana emergente para confirmar eliminar horario -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Eliminar Horario Actual</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar el horario actual?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Ventana emergente con botones para los días de la semana -->
     <div class="modal fade" id="daysModal" tabindex="-1" aria-labelledby="daysModalLabel" aria-hidden="true">
@@ -142,6 +164,23 @@
 
             $('#daysModal').modal('hide');
         });
+                // Mostrar ventana emergente para confirmar eliminar horario
+                $('#newScheduleBtn').click(function() {
+            $('#confirmDeleteModal').modal('show');
+        });
+
+                // Eliminar horario y mostrar ventana emergente de días
+                $('#confirmDeleteBtn').click(function() {
+            // Resetear el calendario
+            calendar.removeAllEvents();
+
+            // Mostrar la ventana emergente de días
+            $('#daysModal').modal('show');
+
+            // Cerrar la ventana emergente de confirmación
+            $('#confirmDeleteModal').modal('hide');
+        });
+
 
         });
 
