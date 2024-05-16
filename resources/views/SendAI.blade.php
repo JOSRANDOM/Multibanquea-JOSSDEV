@@ -7,35 +7,51 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css' rel='stylesheet' />
 </head>
 <body>
-    <h1>Calendario de Categorías <span id="selectedDays"></span></h1>
-
-    <div id='calendar'></div>
-
-<!-- Ventana emergente con botones para los días de la semana -->
-<div class="modal fade" id="daysModal" tabindex="-1" aria-labelledby="daysModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="daysModalLabel">Seleccione un día</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="btn-group" role="group" aria-label="Días de la semana">
-                    <button type="button" class="btn btn-primary" id="lunesBtn" onclick="highlightButton(this)">Lunes</button>
-                    <button type="button" class="btn btn-primary" id="martesBtn" onclick="highlightButton(this)">Martes</button>
-                    <button type="button" class="btn btn-primary" id="miercolesBtn" onclick="highlightButton(this)">Miércoles</button>
-                    <button type="button" class="btn btn-primary" id="juevesBtn" onclick="highlightButton(this)">Jueves</button>
-                    <button type="button" class="btn btn-primary" id="viernesBtn" onclick="highlightButton(this)">Viernes</button>
-                    <button type="button" class="btn btn-primary" id="sabadoBtn" onclick="highlightButton(this)">Sábado</button>
-                    <button type="button" class="btn btn-primary" id="domingoBtn" onclick="highlightButton(this)">Domingo</button>
+    <div class="container pt-3 pb-2 mb-3 ">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-boton">
+            <h1 style="color: black;">HORARIO DE ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    <a href="{{ route('home') }}" class="btn btn-danger">
+                        <i class="bi bi-arrow-return-left"></i> Regresar
+                    </a>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="scheduleBtn">Programar</button>
+        </div>
+     <span id="selectedDays"></span>
+    
+        <div class="calendar-container"> <!-- Contenedor adicional para el calendario -->
+            <div id="calendar"></div>
+        </div>
+    
+    <!-- Ventana emergente con botones para los días de la semana -->
+    <div class="modal fade" id="daysModal" tabindex="-1" aria-labelledby="daysModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="daysModalLabel">Seleccione un día</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" role="group" aria-label="Días de la semana">
+                        <button type="button" class="btn btn-primary" id="lunesBtn" onclick="highlightButton(this)">Lunes</button>
+                        <button type="button" class="btn btn-primary" id="martesBtn" onclick="highlightButton(this)">Martes</button>
+                        <button type="button" class="btn btn-primary" id="miercolesBtn" onclick="highlightButton(this)">Miércoles</button>
+                        <button type="button" class="btn btn-primary" id="juevesBtn" onclick="highlightButton(this)">Jueves</button>
+                        <button type="button" class="btn btn-primary" id="viernesBtn" onclick="highlightButton(this)">Viernes</button>
+                        <button type="button" class="btn btn-primary" id="sabadoBtn" onclick="highlightButton(this)">Sábado</button>
+                        <button type="button" class="btn btn-primary" id="domingoBtn" onclick="highlightButton(this)">Domingo</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="scheduleBtn">Programar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    </div>
+
     
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>

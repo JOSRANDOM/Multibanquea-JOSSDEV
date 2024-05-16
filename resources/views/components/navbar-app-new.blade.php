@@ -65,7 +65,7 @@
             </li>
             @endif
             <li class="nav-item mb-2 w-100">
-                <a href="{{ route('training.index') }}" class="nav-link align-middle text-white">
+                <a href="{{ route('training.IA') }}" class="nav-link align-middle text-white">
                     <i class="bi bi-calendar-range"></i> <span class="ms-1 d-sm-inline">Entrenamiento Personalizado</span> 
                     <span class="badge bg-warning text-dark">beta</span>
                 </a>
