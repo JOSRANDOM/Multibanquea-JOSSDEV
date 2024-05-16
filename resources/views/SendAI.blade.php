@@ -104,21 +104,25 @@
         var events = [];
         var currentDate = moment().startOf('month');
         while (currentDate.month() == moment().month()) {
-            var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
-            if (selectedDays.includes(dayName)) {
-                categories.forEach(function(category) {
-                    events.push({
-                        title: category,
-                        start: currentDate.format("YYYY-MM-DD"),
-                        allDay: true
-                    });
-                });
-            }
-            currentDate.add(1, 'day');
-        }
+    var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
+    if (selectedDays.includes(dayName)) {
+        // Elegir una categoría aleatoria
+        var randomCategory = categories[Math.floor(Math.random() * categories.length)];
+
+        events.push({
+            title: randomCategory,
+            start: currentDate.format("YYYY-MM-DD"),
+            allDay: true
+        });
+    }
+    currentDate.add(1, 'day');
+}
+
         console.log("Eventos a agregar:", events);
             // Agregar eventos al calendario
             calendar.addEventSource(events);
+
+            $('#daysModal').modal('hide');
         });
 
         });
