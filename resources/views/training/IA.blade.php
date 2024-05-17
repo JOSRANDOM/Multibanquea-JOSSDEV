@@ -11,6 +11,9 @@
         <h1 style="color: white;">HORARIO DE ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
+                <button type="button" class="btn btn-success" id="newScheduleBtn">
+                    <i class="bi bi-plus"></i> Nuevo Horario
+                 </button>
                 <a href="{{ route('home') }}" class="btn btn-danger">
                     <i class="bi bi-arrow-return-left"></i> Regresar
                 </a>
@@ -49,6 +52,25 @@
     </div>
 </div>
 
+<!-- Ventana emergente para falta de datos -->
+<div class="modal fade" id="noDataModal" tabindex="-1" aria-labelledby="noDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="noDataModalLabel">Datos insuficientes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Necesita realizar más datos.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='{{ route('exams.index') }}'">Ir a Exams</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 @endsection
 
@@ -59,27 +81,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
-        var selectedDay = null; // Variable para almacenar el día seleccionado
+            var selectedDay = null; // Variable para almacenar el día seleccionado
 
-        function highlightButton(button) {
-        $(button).toggleClass('active');
-        selectedDay = $(button).text(); // Almacenar el día seleccionado
+function highlightButton(button) {
+$(button).toggleClass('active');
+selectedDay = $(button).text(); // Almacenar el día seleccionado
 
-        // Obtener los días seleccionados y mostrarlos junto al título del calendario
-        var selectedDays = [];
-        $('#daysModal .btn.active').each(function() {
-            selectedDays.push($(this).text());
-        });
-        $('#selectedDays').text('(' + selectedDays.join(', ') + ')');
-    }
+// Obtener los días seleccionados y mostrarlos junto al título del calendario
+var selectedDays = [];
+$('#daysModal .btn.active').each(function() {
+    selectedDays.push($(this).text());
+});
+$('#selectedDays').text('(' + selectedDays.join(', ') + ')');
+}
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 var calendarEl = document.getElementById('calendar');
 var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    locale: 'es',
-    events: [] // Inicialmente, no hay eventos
+initialView: 'dayGridMonth',
+locale: 'es',
+events: [] // Inicialmente, no hay eventos
 });
 calendar.render();
 
@@ -92,56 +114,74 @@ console.log("Botón 'Programar' presionado");
 // Obtener días seleccionados
 var selectedDays = [];
 $('#daysModal .btn.active').each(function() {
-    selectedDays.push($(this).text());
+selectedDays.push($(this).text());
 });
 console.log("Días seleccionados:", selectedDays);
 
 // Obtener categorías
 var categories = [];
 @foreach ($response->json() as $item)
-    @if ($item['nota'] < 10)
-        categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
-    @endif
+@if ($item['nota'] < 10)
+categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
+@endif
 @endforeach
 console.log("Categorías:", categories);
 
-    // Mapeo de nombres de días en inglés a español
-    var daysMapping = {
-        "Monday": "Lunes",
-        "Tuesday": "Martes",
-        "Wednesday": "Miércoles",
-        "Thursday": "Jueves",
-        "Friday": "Viernes",
-        "Saturday": "Sábado",
-        "Sunday": "Domingo"
-    };
+// Mapeo de nombres de días en inglés a español
+var daysMapping = {
+"Monday": "Lunes",
+"Tuesday": "Martes",
+"Wednesday": "Miércoles",
+"Thursday": "Jueves",
+"Friday": "Viernes",
+"Saturday": "Sábado",
+"Sunday": "Domingo"
+};
 
-    // Distribuir las categorías solo en los días seleccionados
-    var events = [];
-    var currentDate = moment().startOf('month');
-    while (currentDate.month() == moment().month()) {
+// Distribuir las categorías solo en los días seleccionados
+var events = [];
+var currentDate = moment().startOf('month');
+while (currentDate.month() == moment().month()) {
 var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
 if (selectedDays.includes(dayName)) {
-    // Elegir una categoría aleatoria
-    var randomCategory = categories[Math.floor(Math.random() * categories.length)];
+// Elegir una categoría aleatoria
+var randomCategory = categories[Math.floor(Math.random() * categories.length)];
 
-    events.push({
-        title: randomCategory,
-        start: currentDate.format("YYYY-MM-DD"),
-        allDay: true
-    });
+events.push({
+title: randomCategory,
+start: currentDate.format("YYYY-MM-DD"),
+allDay: true
+});
 }
 currentDate.add(1, 'day');
 }
 
-    console.log("Eventos a agregar:", events);
-        // Agregar eventos al calendario
-        calendar.addEventSource(events);
+console.log("Eventos a agregar:", events);
+// Agregar eventos al calendario
+calendar.addEventSource(events);
 
-        $('#daysModal').modal('hide');
-    });
+$('#daysModal').modal('hide');
+});
+    // Mostrar ventana emergente para confirmar eliminar horario
+    $('#newScheduleBtn').click(function() {
+$('#confirmDeleteModal').modal('show');
+});
 
-    });
+    // Eliminar horario y mostrar ventana emergente de días
+    $('#confirmDeleteBtn').click(function() {
+// Resetear el calendario
+calendar.removeAllEvents();
+
+// Mostrar la ventana emergente de días
+$('#daysModal').modal('show');
+
+// Cerrar la ventana emergente de confirmación
+$('#confirmDeleteModal').modal('hide');
+});
+
+
+});
+
 
 </script>
 @endsection

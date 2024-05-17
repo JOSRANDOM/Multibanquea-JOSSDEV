@@ -13,7 +13,7 @@
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
                     <button type="button" class="btn btn-success" id="newScheduleBtn">
-                        <i class="bi bi-plus"></i> Nuevo Horario
+                       <i class="bi bi-plus"></i> Nuevo Horario
                     </button>
                     <a href="{{ route('home') }}" class="btn btn-danger">
                         <i class="bi bi-arrow-return-left"></i> Regresar

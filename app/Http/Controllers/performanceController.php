@@ -59,13 +59,13 @@ class PerformanceController extends Controller
         $response = Http::post($url, $formattedResults);
     
         // Retornar la vista con los datos y la respuesta del servicio
-        return view('SendAI', [
+        return view('training.IA', [
             'formattedResults' => $formattedResults,
             'response' => $response
         ]);
     }
 
-    public function IA () 
+    public function IA() 
     {
         // Obtener el nombre de la variante
         $variantName = env('VARIANT_NAME');
@@ -93,7 +93,7 @@ class PerformanceController extends Controller
                 INNER JOIN " . $dbName . ".question_subcategories AS subcategorias ON preguntas.question_subcategory_id = subcategorias.id
             WHERE
                 examenes.user_id = :user_id
-                ", ['user_id' => $userId]);
+            ", ['user_id' => $userId]);
     
         // Formatear los resultados en el formato JSON requerido
         $formattedResults = [];
@@ -114,10 +114,16 @@ class PerformanceController extends Controller
         // Realizar la solicitud a la API
         $response = Http::post($url, $formattedResults);
     
+        // Verificar si la respuesta tiene datos
+        $responseData = $response->json();
+        $hasData = !empty($responseData);
+    
         // Retornar la vista con los datos y la respuesta del servicio
         return view('training.IA', [
             'formattedResults' => $formattedResults,
-            'response' => $response
+            'responseData' => $responseData,
+            'hasData' => $hasData
         ]);
     }
+    
 }
