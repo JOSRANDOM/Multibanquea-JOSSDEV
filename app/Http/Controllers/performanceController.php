@@ -125,5 +125,9 @@ class PerformanceController extends Controller
             'hasData' => $hasData
         ]);
     }
+
+    public function training(){
+        return view('training.entrenamiento');
+    }
     
 }
