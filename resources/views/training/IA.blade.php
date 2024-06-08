@@ -81,108 +81,118 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
-            var selectedDay = null; // Variable para almacenar el día seleccionado
+    var trainingUrl = "{{ route('training.training') }}";
+    var selectedDay = null; // Variable para almacenar el día seleccionado
 
-function highlightButton(button) {
-$(button).toggleClass('active');
-selectedDay = $(button).text(); // Almacenar el día seleccionado
+    function highlightButton(button) {
+        $(button).toggleClass('active');
+        selectedDay = $(button).text(); // Almacenar el día seleccionado
 
-// Obtener los días seleccionados y mostrarlos junto al título del calendario
-var selectedDays = [];
-$('#daysModal .btn.active').each(function() {
-    selectedDays.push($(this).text());
-});
-$('#selectedDays').text('(' + selectedDays.join(', ') + ')');
+        // Obtener los días seleccionados y mostrarlos junto al título del calendario
+        var selectedDays = [];
+        $('#daysModal .btn.active').each(function() {
+            selectedDays.push($(this).text());
+        });
+        $('#selectedDays').text('(' + selectedDays.join(', ') + ')');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+            events: [], // Inicialmente, no hay eventos
+            eventClick: function(info) {
+        var eventId = info.event.id;
+        var categoryName = info.event.title;
+        var categoryId = info.event.extendedProps.categoryId; // Obteniendo el ID de la categoría desde los datos extendidos del evento
+        window.location.href = trainingUrl + '?eventId=' + eventId + '&categoryName=' + categoryName + '&categoryId=' + categoryId; // Pasando ambos el nombre y el ID de la categoría a la URL
 }
 
+        });
+        calendar.render();
 
-document.addEventListener('DOMContentLoaded', function() {
-var calendarEl = document.getElementById('calendar');
-var calendar = new FullCalendar.Calendar(calendarEl, {
-initialView: 'dayGridMonth',
-locale: 'es',
-events: [] // Inicialmente, no hay eventos
-});
-calendar.render();
+        // Mostrar la ventana emergente al hacer clic en el botón de días de la semana
+        $('#daysModal').modal('show');
 
-// Mostrar la ventana emergente al hacer clic en el botón de días de la semana
-$('#daysModal').modal('show');
+        $('#scheduleBtn').click(function() {
+            console.log("Botón 'Programar' presionado");
 
-$('#scheduleBtn').click(function() {
-console.log("Botón 'Programar' presionado");
+            // Obtener días seleccionados
+            var selectedDays = [];
+            $('#daysModal .btn.active').each(function() {
+                selectedDays.push($(this).text());
+            });
+            console.log("Días seleccionados:", selectedDays);
 
-// Obtener días seleccionados
-var selectedDays = [];
-$('#daysModal .btn.active').each(function() {
-selectedDays.push($(this).text());
-});
-console.log("Días seleccionados:", selectedDays);
-
-// Obtener categorías
-var categories = [];
-@foreach ($response->json() as $item)
-@if ($item['nota'] < 10)
-categories.push('{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}');
-@endif
-@endforeach
-console.log("Categorías:", categories);
-
-// Mapeo de nombres de días en inglés a español
-var daysMapping = {
-"Monday": "Lunes",
-"Tuesday": "Martes",
-"Wednesday": "Miércoles",
-"Thursday": "Jueves",
-"Friday": "Viernes",
-"Saturday": "Sábado",
-"Sunday": "Domingo"
-};
-
-// Distribuir las categorías solo en los días seleccionados
-var events = [];
-var currentDate = moment().startOf('month');
-while (currentDate.month() == moment().month()) {
-var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
-if (selectedDays.includes(dayName)) {
-// Elegir una categoría aleatoria
-var randomCategory = categories[Math.floor(Math.random() * categories.length)];
-
-events.push({
-title: randomCategory,
-start: currentDate.format("YYYY-MM-DD"),
-allDay: true
-});
-}
-currentDate.add(1, 'day');
-}
-
-console.log("Eventos a agregar:", events);
-// Agregar eventos al calendario
-calendar.addEventSource(events);
-
-$('#daysModal').modal('hide');
-});
-    // Mostrar ventana emergente para confirmar eliminar horario
-    $('#newScheduleBtn').click(function() {
-$('#confirmDeleteModal').modal('show');
-});
-
-    // Eliminar horario y mostrar ventana emergente de días
-    $('#confirmDeleteBtn').click(function() {
-// Resetear el calendario
-calendar.removeAllEvents();
-
-// Mostrar la ventana emergente de días
-$('#daysModal').modal('show');
-
-// Cerrar la ventana emergente de confirmación
-$('#confirmDeleteModal').modal('hide');
-});
+            // Obtener categorías
+            var categories = [];
+            @foreach ($response->json() as $item)
+                @if ($item['nota'] < 10)
+                    categories.push({
+                        id: '{{ $item['categoria'] }}',
+                        name: '{{ DB::table('question_categories')->where('id', $item['categoria'])->value('name') }}'
+                    });
+                @endif
+            @endforeach
+            console.log("Categorías:", categories);
 
 
-});
+            // Mapeo de nombres de días en inglés a español
+            var daysMapping = {
+                "Monday": "Lunes",
+                "Tuesday": "Martes",
+                "Wednesday": "Miércoles",
+                "Thursday": "Jueves",
+                "Friday": "Viernes",
+                "Saturday": "Sábado",
+                "Sunday": "Domingo"
+            };
+
+            // Distribuir las categorías solo en los días seleccionados
+            var events = [];
+            var currentDate = moment().startOf('month');
+            while (currentDate.month() == moment().month()) {
+                var dayName = daysMapping[currentDate.format('dddd')]; // Obtener el nombre del día en español
+                if (selectedDays.includes(dayName)) {
+                    // Elegir una categoría aleatoria
+                    var randomCategory = categories[Math.floor(Math.random() * categories.length)];
+
+                    events.push({
+                        title: randomCategory.name, // Aquí se utiliza solo el nombre de la categoría
+                        categoryId: randomCategory.id, // Conserva el ID de la categoría si lo necesitas más tarde
+                        start: currentDate.format("YYYY-MM-DD"),
+                        allDay: true
+                    });
+                }
+                currentDate.add(1, 'day');
+            }
 
 
+            console.log("Eventos a agregar:", events);
+            // Agregar eventos al calendario
+            calendar.addEventSource(events);
+
+            $('#daysModal').modal('hide');
+        });
+
+        // Mostrar ventana emergente para confirmar eliminar horario
+        $('#newScheduleBtn').click(function() {
+            $('#confirmDeleteModal').modal('show');
+        });
+
+        // Eliminar horario y mostrar ventana emergente de días
+        $('#confirmDeleteBtn').click(function() {
+            // Resetear el calendario
+            calendar.removeAllEvents();
+
+            // Mostrar la ventana emergente de días
+            $('#daysModal').modal('show');
+
+            // Cerrar la ventana emergente de confirmación
+            $('#confirmDeleteModal').modal('hide');
+        });
+    });
 </script>
 @endsection
 

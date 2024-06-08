@@ -126,8 +126,11 @@ class PerformanceController extends Controller
         ]);
     }
 
-    public function training(){
-        return view('training.entrenamiento');
+    public function training(Request $request){
+
+        $categoryId = $request->input('id');
+
+        return view('training.entrenamiento', compact('categoryId'));
     }
     
 }
