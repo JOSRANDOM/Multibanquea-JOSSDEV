@@ -20,7 +20,6 @@
             </div>
         </div>
     </div>
-    <span id="selectedDays"></span>
 
     <div class="calendar-container">
         <div id="calendar"></div>

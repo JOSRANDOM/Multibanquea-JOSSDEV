@@ -29,7 +29,7 @@
 </div>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 style="color: white;">ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
+    <h1 style="color: white;">ENTRENAMIENTO <span class="badge bg-warning text-dark" style="font-size: 1.5rem;">beta</span></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
             <a href="{{ route('home') }}" class="btn btn-danger">
@@ -50,22 +50,27 @@
 
 <div id="question-container">
     @foreach($subcategories as $subcategory)
-        @foreach($subcategory->questions as $question)
+        @foreach($subcategory->questions as $index => $question)
         <div class="question-item" data-question-id="{{ $question->id }}" style="display: none;">
-            <li class="p-3 mb-3 rounded" style="background-color: white;">
-                <h4 class="mb-4">{{ $question->text }}</h4> <!-- Añadido margin-bottom para separar la pregunta de las respuestas -->
+            <li class="p-3 mb-4 rounded" style="background-color: white;">
+                <h4 class="mb-3">{{ $question->text }}</h4>
                 <div class="answer-list">
                     @foreach($question->answers as $answer)
                     <button type="button" class="btn btn-primary mb-3 rounded answer-btn w-100" data-correct="{{ $answer->correct }}" data-text="{{ $answer->text }}" data-question-id="{{ $question->id }}">{{ $answer->text }}</button>
                     @endforeach
                 </div>
                 <div class="correct-answer mt-2" style="display: none;">
-                    <span class="badge bg-success correct-answer-label" style="font-size: 1.25rem;">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
+                    <span class="badge bg-success correct-answer-label" style="font-size: 1.5rem;">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
                 </div>
             </li>
         </div>
         @endforeach
     @endforeach
+</div>
+
+<!-- Botón para finalizar entrenamiento -->
+<div id="finishTrainingBtnContainer" class="text-center" style="display: none;">
+    <button id="finishTrainingBtn" class="btn btn-success btn-lg">Finalizar Entrenamiento</button>
 </div>
 
 <!-- Modal para mostrar cuando el tiempo de entrenamiento ha terminado -->
@@ -108,6 +113,11 @@
                 questions[currentQuestionIndex].style.display = 'block';
                 currentQuestionIndex++;
             }
+
+            // Mostrar el botón de finalizar entrenamiento al llegar a la última pregunta
+            if (currentQuestionIndex === totalQuestions) {
+                document.getElementById('finishTrainingBtnContainer').style.display = 'block';
+            }
         }
 
         answerButtons.forEach(button => {
@@ -129,13 +139,12 @@
                 }
 
                 this.parentElement.nextElementSibling.style.display = 'block';
-
                 this.parentElement.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = true);
 
                 answeredCount++;
                 document.getElementById('answeredCount').textContent = answeredCount;
 
-                setTimeout(showNextQuestion, 2000);
+                setTimeout(showNextQuestion, 2000); // Retraso para mostrar la siguiente pregunta
             });
         });
 
@@ -153,6 +162,7 @@
             }
         });
 
+        // Función para iniciar el contador regresivo
         function startCountdown() {
             countdownTimer = setInterval(function() {
                 countdownSeconds--;
@@ -167,8 +177,13 @@
                         window.location.href = "{{ route('home') }}";
                     }, 3000);
                 }
-            }, 1000);
+            }, 1000); // Actualizar cada segundo (1000 ms)
         }
+
+        // Botón para finalizar el entrenamiento
+        document.getElementById('finishTrainingBtn').addEventListener('click', function() {
+            window.location.href = "{{ route('training.statistics') }}";
+        });
     });
 </script>
 @endsection
