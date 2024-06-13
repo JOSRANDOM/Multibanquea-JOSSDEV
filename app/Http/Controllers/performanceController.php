@@ -126,7 +126,7 @@ class PerformanceController extends Controller
             'hasData' => $hasData
         ]);
     }
-
+    
     public function training($id){
 
         // Obtener la categoría por ID
