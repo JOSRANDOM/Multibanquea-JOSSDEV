@@ -15,36 +15,19 @@
     </div>
 </div>
 
-<!-- Mostrar el ID de la categoría -->
-<div>
-    <h2>ID de la Categoría: {{ $id }}</h2>
-</div>
-
-<!-- Mostrar las subcategorías con sus IDs y 10 preguntas al azar -->
-<div>
-    <h3>Subcategorías</h3>
-    <ul>
-        @foreach($subcategories as $subcategory)
-            <li>
-                {{ $subcategory->id }} - {{ $subcategory->name }}
-                <ul>
-                    @foreach($subcategory->questions as $question)
-                        <li>
-                            {{ $question->id }} - {{ $question->text }}
-                            <ul>
+@foreach($subcategories as $subcategory)
+            @foreach($subcategory->questions as $question)
+                <li class="p-3 mb-3 rounded" style="background-color: white;">
+                    <h4>{{ $question->text }}</h4>
+                        <ul>
+                            <div class="btn-group">
                                 @foreach($question->answers as $answer)
-                                    @if ($answer->correct == 1)
-                                        <li style="color: red;">{{ $answer->id }} - {{ $answer->text }}</li>
-                                    @else
-                                        <li>{{ $answer->id }} - {{ $answer->text }}</li>
-                                    @endif
+                                <button type="button" class="btn btn-primary mx-1 rounded">{{ $answer->text }}</button>
                                 @endforeach
-                            </ul>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul>
-</div>
+                            </div>
+                    </ul>
+                </li>
+            @endforeach
+@endforeach
+
 @endsection
