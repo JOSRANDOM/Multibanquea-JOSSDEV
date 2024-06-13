@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="daysModalLabel">Seleccione un día</h5>
+                    <h5 class="modal-title" id="daysModalLabel"><i class="bi bi-calendar4-range"></i>  Seleccione un día</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -50,10 +50,6 @@
                                 </div>
                             @endforeach
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studyHours" class="form-label">Horas de estudio:</label>
-                        <input type="number" class="form-control" id="studyHours" min="1" placeholder="Ingrese horas de estudio">
                     </div>
                 </div>
                 <div class="modal-footer">
