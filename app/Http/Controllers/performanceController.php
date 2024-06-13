@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QuestionCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
@@ -124,6 +125,19 @@ class PerformanceController extends Controller
             'responseData' => $responseData,
             'hasData' => $hasData
         ]);
+    }
+
+    public function training($id){
+
+        // Obtener la categoría por ID
+        $category = QuestionCategory::findOrFail($id);
+
+        // Obtener las subcategorías relacionadas con sus preguntas al azar (10 preguntas)
+        $subcategories = $category->question_subcategories()->with(['questions' => function ($query) {
+            $query->inRandomOrder()->limit(10);
+        }])->get();
+
+        return view('training.training', compact('id', 'subcategories'));
     }
     
 }
