@@ -40,28 +40,27 @@
 </div>
 
 <div class="d-flex align-items-center mb-3">
-    <div id="trainingTimeDisplay" class="badge bg-warning text-dark me-3">
+    <div id="trainingTimeDisplay" class="badge bg-warning text-dark me-3" style="font-size: 1.25rem;">
         <i class="bi bi-hourglass-split"></i> Tiempo restante: <span id="timeRemaining"></span>
     </div>
-    <div id="questionCounter" class="badge bg-warning text-dark">
+    <div id="questionCounter" class="badge bg-warning text-dark" style="font-size: 1.25rem;">
         Preguntas respondidas: <span id="answeredCount">0</span> / <span id="totalQuestions">0</span>
     </div>
 </div>
 
-<!-- Agregamos un margen superior adicional aquí -->
-<div id="question-container" class="mt-4">
+<div id="question-container">
     @foreach($subcategories as $subcategory)
         @foreach($subcategory->questions as $question)
         <div class="question-item" data-question-id="{{ $question->id }}" style="display: none;">
             <li class="p-3 mb-3 rounded" style="background-color: white;">
-                <h4>{{ $question->text }}</h4>
-                <div class="btn-group">
+                <h4 class="mb-4">{{ $question->text }}</h4> <!-- Añadido margin-bottom para separar la pregunta de las respuestas -->
+                <div class="answer-list">
                     @foreach($question->answers as $answer)
-                    <button type="button" class="btn btn-primary mx-1 rounded answer-btn" data-correct="{{ $answer->correct }}" data-text="{{ $answer->text }}" data-question-id="{{ $question->id }}">{{ $answer->text }}</button>
+                    <button type="button" class="btn btn-primary mb-3 rounded answer-btn w-100" data-correct="{{ $answer->correct }}" data-text="{{ $answer->text }}" data-question-id="{{ $question->id }}">{{ $answer->text }}</button>
                     @endforeach
                 </div>
                 <div class="correct-answer mt-2" style="display: none;">
-                    <span class="badge bg-success">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
+                    <span class="badge bg-success correct-answer-label" style="font-size: 1.25rem;">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
                 </div>
             </li>
         </div>

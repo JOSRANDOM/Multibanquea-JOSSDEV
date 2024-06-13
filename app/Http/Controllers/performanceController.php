@@ -139,5 +139,10 @@ class PerformanceController extends Controller
 
         return view('training.training', compact('id', 'subcategories'));
     }
+
+    public function statistics(){
+
+        return view('training.statistics');
+    }
     
 }

@@ -245,6 +245,7 @@ Route::name('training.')
     ->group(function () {
         Route::get('/IA', [performanceController::class, 'SendAI'])->name('IA');
         Route::get('/IA/training/{id}', [performanceController::class, 'training'])->name('training');
+        Route::get('/IA/statistics', [performanceController::class, 'statistics'])->name('statistics');
         Route::get('/training',[TrainingController::class,'index'])->name('index');
         Route::get('/training/display',[TrainingController::class,'display'])->name('display');
         //Route::get('training/entrenamiento', [performanceController::class, 'training'])->name('training');
