@@ -8,7 +8,7 @@
 @section('content')
 <div class="container pt-3 pb-2 mb-3 ">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-boton">
-        <h1 style="color: white;">HORARIO DE ENTRENAMIENTO <span class="badge bg-warning text-dark">beta</span></h1>
+        <h1 style="color: white;">HORARIO DE ENTRENAMIENTO</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
                 <button type="button" class="btn btn-success" id="newScheduleBtn">
@@ -20,7 +20,6 @@
             </div>
         </div>
     </div>
-    <span id="selectedDays"></span>
 
     <div class="calendar-container">
         <div id="calendar"></div>
@@ -125,11 +124,13 @@
             locale: 'es',
             events: [],
             eventClick: function(info) {
-                var categoryId = info.event.extendedProps.categoryId; // Assuming you have a categoryId in extendedProps
+                var categoryId = info.event.extendedProps.categoryId;
                 var trainingRoute = "{{ route('training.training', ['id' => ':id']) }}";
                 trainingRoute = trainingRoute.replace(':id', categoryId);
                 window.location.href = trainingRoute;
-            }
+            },
+            eventColor: '#01897B', // Color de fondo de los eventos
+            eventTextColor: 'white'  // Color del texto de los eventos
         });
         calendar.render();
 
