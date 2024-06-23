@@ -20,7 +20,7 @@
 
 <div id="question-container">
     @foreach($subcategories as $subcategory)
-        @foreach($subcategory->questions as $question)
+        @foreach($subcategory->questions as $index => $question)
         <div class="question-item" data-question-id="{{ $question->id }}" style="display: none;">
             <li class="p-3 mb-3 rounded" style="background-color: white;">
                 <p class="mb-4">{{ $question->text }}</p>
@@ -30,7 +30,7 @@
                     @endforeach
                 </div>
                 <div class="correct-answer mt-2" style="display: none;">
-                    <span class="badge bg-success correct-answer-label" style="font-size: 1.25rem;">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
+                    <span class="badge bg-success correct-answer-label" style="font-size: 1.5rem;">La respuesta correcta es: <strong class="correct-answer-text"></strong></span>
                 </div>
             </li>
         </div>
@@ -59,6 +59,11 @@
                 questions[currentQuestionIndex].style.display = 'block';
                 currentQuestionIndex++;
             }
+
+            // Mostrar el botón de finalizar entrenamiento al llegar a la última pregunta
+            if (currentQuestionIndex === totalQuestions) {
+                document.getElementById('finishTrainingBtnContainer').style.display = 'block';
+            }
         }
 
         answerButtons.forEach(button => {
@@ -79,13 +84,12 @@
                 }
 
                 this.parentElement.nextElementSibling.style.display = 'block';
-
                 this.parentElement.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = true);
 
                 answeredCount++;
                 document.getElementById('answeredCount').textContent = answeredCount;
 
-                setTimeout(showNextQuestion, 2000);
+                setTimeout(showNextQuestion, 2000); // Retraso para mostrar la siguiente pregunta
             });
         });
 
