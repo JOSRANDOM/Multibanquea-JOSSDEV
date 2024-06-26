@@ -207,8 +207,13 @@ class PerformanceController extends Controller
         $questions = Question::pluck('id')->toArray();
         $currentQuestionIndex = array_search($id, $questions) + 1;
     
-        return view('training.show', compact('question', 'totalQuestions', 'currentQuestionIndex'));
+        // Obtener el título del entrenamiento
+        // Aquí se asume que todas las preguntas pertenecen a una categoría común
+        $trainingTitle = "Título del Entrenamiento"; // Ajusta esto según tu lógica
+    
+        return view('training.show', compact('question', 'totalQuestions', 'currentQuestionIndex', 'trainingTitle'));
     }
+    
     
     
     
