@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\QuestionCategory;
 use App\Models\Training;
 use App\Models\Training_questions;
@@ -129,6 +130,7 @@ class PerformanceController extends Controller
         ]);
     }
     
+<<<<<<< HEAD
     public function training($id, $fecha)
     {
         // Aquí puedes realizar cualquier lógica adicional con $id y $fecha
@@ -188,6 +190,33 @@ class PerformanceController extends Controller
             'event_ids' => 'required|array',
             'event_ids' => 'required|array',
         ]);
+=======
+    public function training($id)
+    {
+        // Obtener la categoría por ID
+        $category = QuestionCategory::findOrFail($id);
+        
+        // Obtener el título del entrenamiento
+        $trainingTitle = $category->name;
+        
+        // Obtener las subcategorías relacionadas con sus preguntas al azar (15 preguntas por subcategoría)
+        $subcategories = $category->question_subcategories()->with(['questions' => function ($query) {
+            $query->inRandomOrder()->limit(15);
+        }])->get();
+        
+        // Calcular el número total de preguntas
+        $totalQuestions = 0;
+        foreach ($subcategories as $subcategory) {
+            $totalQuestions += $subcategory->questions->count();
+        }
+        
+        // Inicialmente, no hay preguntas respondidas
+        $answeredCount = 0;
+        
+        return view('training.training', compact('trainingTitle', 'subcategories', 'totalQuestions', 'answeredCount'));
+    } 
+    
+>>>>>>> 638d6322ae46dbbd518741cea5c133cd71e98f04
 
         foreach ($validatedData['event_ids'] as $eventId) {
             Training::create([
@@ -236,6 +265,26 @@ class PerformanceController extends Controller
             return response()->json(['error' => 'Error al almacenar la respuesta.', 'message' => $e->getMessage()], 500);
         }
     }
+<<<<<<< HEAD
       
+=======
+
+    public function showQuestion($id)
+    {
+        // Obtener la pregunta por ID
+        $question = Question::with('answers')->findOrFail($id);
+    
+        // Obtener el total de preguntas del examen
+        $totalQuestions = Question::count(); // Ajusta esto según tu lógica
+    
+        // Obtener el índice de la pregunta actual (1-based index)
+        $questions = Question::pluck('id')->toArray();
+        $currentQuestionIndex = array_search($id, $questions) + 1;
+    
+        return view('training.show', compact('question', 'totalQuestions', 'currentQuestionIndex'));
+    }
+    
+    
+>>>>>>> 638d6322ae46dbbd518741cea5c133cd71e98f04
     
 }
