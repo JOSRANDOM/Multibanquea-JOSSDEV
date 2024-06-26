@@ -130,67 +130,6 @@ class PerformanceController extends Controller
         ]);
     }
     
-<<<<<<< HEAD
-    public function training($id, $fecha)
-    {
-        // Aquí puedes realizar cualquier lógica adicional con $id y $fecha
-        $category = QuestionCategory::findOrFail($id);
-        $subcategories = $category->question_subcategories()->with(['questions' => function ($query) {
-            $query->inRandomOrder()->limit(15);
-        }])->get();
-    
-        // Calcular el número total de preguntas
-        $totalQuestions = $subcategories->flatMap(function ($subcategory) {
-            return $subcategory->questions;
-        })->count();
-    
-        $trainingId = uniqid(); // Generar un ID único para el entrenamiento
-    
-        // Puedes pasar $fecha a la vista como una variable junto con $totalQuestions
-        return view('training.training', compact('id', 'subcategories', 'trainingId', 'fecha', 'totalQuestions'));
-    }
-    
-    
-
-    public function statistics()
-    {
-        // Obtener el ID del usuario autenticado
-        $userId = auth()->id();
-    
-        // Obtener la fecha del entrenamiento (suponiendo que está en la última pregunta respondida)
-        $latestTrainingQuestion = Training_questions::where('user_id', $userId)
-            ->orderBy('created_at', 'desc')
-            ->first();
-    
-        $date = $latestTrainingQuestion ? $latestTrainingQuestion->date : now()->toDateString();
-    
-        // Contar preguntas correctas e incorrectas del usuario
-        $correctCount = Training_questions::where('user_id', $userId)
-            ->where('is_correct', 1)
-            ->count();
-    
-        $incorrectCount = Training_questions::where('user_id', $userId)
-            ->where('is_correct', 0)
-            ->count();
-    
-        return view('training.statistics', [
-            'date' => $date,
-            'correctCount' => $correctCount,
-            'incorrectCount' => $incorrectCount
-        ]);
-    }
-    
-
-     public function store(Request $request)
-    {
-        // Valida los datos entrantes
-        $validatedData = $request->validate([
-            'user_id' => 'required|integer',
-            'date_training' => 'required|date',
-            'event_ids' => 'required|array',
-            'event_ids' => 'required|array',
-        ]);
-=======
     public function training($id)
     {
         // Obtener la categoría por ID
@@ -213,25 +152,15 @@ class PerformanceController extends Controller
         // Inicialmente, no hay preguntas respondidas
         $answeredCount = 0;
         
-        return view('training.training', compact('trainingTitle', 'subcategories', 'totalQuestions', 'answeredCount'));
-    } 
-    
->>>>>>> 638d6322ae46dbbd518741cea5c133cd71e98f04
-
-        foreach ($validatedData['event_ids'] as $eventId) {
-            Training::create([
-                'user_id' => $validatedData['user_id'],
-                'date_training' => $validatedData['date_training'],
-                'created_at' => now(),
-                'created_by' => $validatedData['user_id'],
-                'updated_at' => now(),
-                'updated_by' => $validatedData['user_id'], // Asigna un valor aquí
-                'id_category' => $eventId,
-            ]);
-        }
+        // Obtener la fecha actual
+        $fecha = \Carbon\Carbon::now()->format('d-m-Y');
         
+        return view('training.training', compact('trainingTitle', 'subcategories', 'totalQuestions', 'answeredCount', 'fecha'));
+    }
+    
 
-        return response()->json(['message' => 'Training events stored successfully'], 200);
+    public function store(){
+
     }
 
     public function storeAnswer(Request $request)
@@ -265,9 +194,6 @@ class PerformanceController extends Controller
             return response()->json(['error' => 'Error al almacenar la respuesta.', 'message' => $e->getMessage()], 500);
         }
     }
-<<<<<<< HEAD
-      
-=======
 
     public function showQuestion($id)
     {
@@ -285,6 +211,5 @@ class PerformanceController extends Controller
     }
     
     
->>>>>>> 638d6322ae46dbbd518741cea5c133cd71e98f04
     
 }

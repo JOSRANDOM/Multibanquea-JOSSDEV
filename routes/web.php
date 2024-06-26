@@ -249,6 +249,8 @@ Route::name('training.')
         Route::get('/training',[TrainingController::class,'index'])->name('index');
         Route::get('/training/display',[TrainingController::class,'display'])->name('display');
         Route::get('training/show/{id}', [performanceController::class, 'showQuestion'])->name('show');
+        Route::get('training/store', [performanceController::class, 'store'])->name('store');
+        Route::get('training/storeAnswer', [performanceController::class, 'storeAnswer'])->name('storeAnswer');
         //Route::get('training/entrenamiento', [performanceController::class, 'training'])->name('training');
     });
 
