@@ -157,7 +157,22 @@ class PerformanceController extends Controller
         
         return view('training.training', compact('trainingTitle', 'subcategories', 'totalQuestions', 'answeredCount', 'fecha'));
     }
-    
+    public function trainingstep1()
+    {
+        // Obtener todas las preguntas
+        $questions = Question::inRandomOrder()->limit(180)->get();
+        
+        // Calcular el número total de preguntas
+        $totalQuestions = $questions->count();
+        
+        // Inicialmente, no hay preguntas respondidas
+        $answeredCount = 0;
+        
+        // Obtener la fecha actual
+        $fecha = \Carbon\Carbon::now()->format('d-m-Y');
+        
+        return view('training.training1', compact('questions', 'totalQuestions', 'answeredCount', 'fecha'));
+    }    
 
     public function store(){
 

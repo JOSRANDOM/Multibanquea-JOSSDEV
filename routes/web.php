@@ -247,6 +247,7 @@ Route::name('training.')
         Route::get('/IA/training/{id}/{fecha}', [performanceController::class, 'training'])->name('training');
         Route::get('/IA/statistics', [performanceController::class, 'statistics'])->name('statistics');
         Route::get('/training',[TrainingController::class,'index'])->name('index');
+        Route::get('/trainingstep1', [PerformanceController::class, 'trainingstep1'])->name('trainingstep1');
         Route::get('/training/display',[TrainingController::class,'display'])->name('display');
         Route::get('training/show/{id}', [performanceController::class, 'showQuestion'])->name('show');
         Route::get('training/store', [performanceController::class, 'store'])->name('store');

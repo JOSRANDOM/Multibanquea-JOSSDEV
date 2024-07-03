@@ -16012,4 +16012,49 @@ fieldset:disabled .btn {
   padding: 10px; /* Espaciado interior */
 }
 
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px; /* Tamaño del círculo exterior */
+  height: 150px; /* Tamaño del círculo exterior */
+  background-color: #01897B; /* Color del círculo exterior */
+  border-radius: 50%; /* Hace que el contenedor sea un círculo */
+  margin: 15px;
+  color: white; /* Color del texto/icono dentro del círculo */
+  font-size: 24px; /* Tamaño del texto/icono dentro del círculo */
+  overflow: hidden; /* Oculta contenido que sobresale */
+}
+
+.inner-circle {
+  position: absolute;
+  width: calc(100% - 20px); /* Tamaño del círculo interno, ajustable */
+  height: calc(100% - 20px); /* Tamaño del círculo interno, ajustable */
+  background-color: white; /* Color del círculo interno */
+  border-radius: 50%; /* Hace que el círculo interno sea redondeado */
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta para centrar correctamente */
+}
+
+.bi {
+  position: relative;
+  z-index: 2;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px; /* Espacio entre cada círculo y flecha */
+}
+
+.arrow i {
+  font-size: 24px; /* Tamaño del ícono de flecha */
+  color: #01897B; /* Color de la flecha */
+}
+
+
+
 

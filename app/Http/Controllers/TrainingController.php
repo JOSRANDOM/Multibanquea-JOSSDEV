@@ -19,7 +19,11 @@ class TrainingController extends Controller
         return view('training.index', ['response' => $response]);
     }
 
-    public function display(){
-        return view('training.display');
+    public function display()
+    {
+        $paso2Pendiente = true; // Definir la variable según la lógica de tu aplicación
+        $paso3Pendiente = false; // Definir la variable según la lógica de tu aplicación
+
+        return view('training.display', compact('paso2Pendiente', 'paso3Pendiente'));
     }
 }
