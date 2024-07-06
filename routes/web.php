@@ -243,7 +243,7 @@ Route::name('my-account.')
 Route::name('training.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/IA', [performanceController::class, 'SendAI'])->name('IA');
+        Route::get('/IA', [performanceController::class, 'IA'])->name('IA');
         Route::get('/IA/training/{id}/{fecha}', [performanceController::class, 'training'])->name('training');
         Route::get('/IA/statistics', [performanceController::class, 'statistics'])->name('statistics');
         Route::get('/training',[TrainingController::class,'index'])->name('index');
@@ -252,6 +252,10 @@ Route::name('training.')
         Route::get('/training/display',[TrainingController::class,'display'])->name('display');
         Route::post('/training/balance', [TrainingController::class, 'startBalancedExam'])->name('start_balanced');
         Route::post('/training/start-balanced-exam', [TrainingController::class, 'startBalancedExam'])->name('startBalancedExam');
+        Route::get('/training/perfomance/IA', [TrainingController::class, 'trainingIA'])->name('trainingIA');
+        Route::get('/training/show/display', [TrainingController::class, 'ShowDisplay'])->name('ShowDisplay');
+        Route::post('/training/startTraining', [TrainingController::class, 'startTraining'])->name('startTraining');
+
 
         Route::get('training/show/{id}', [performanceController::class, 'showQuestion'])->name('show');
         Route::get('training/store', [performanceController::class, 'store'])->name('store');

@@ -1,5 +1,3 @@
-<!-- training/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -12,13 +10,14 @@
             </div>
 
             <div class="container">
+                <br>
                 <div class="text-center">
-                    <h1>¡En solo 3 pasos!</h1>
+                    <p>Prepárate para el éxito en tus exámenes con nuestra avanzada plataforma de inteligencia artificial. Nuestro algoritmo utiliza las mejores prácticas educativas como la repetición espaciada, segmentación de áreas de estudio y flashcards. Practica eficazmente y prepárate completamente para el examen.</p>
                 </div>
                 
                 <div class="modal-body text-center">
                     <div class="d-flex justify-content-center align-items-center">
-                        <div class="circle" data-step="1">
+                        <div class="circle" data-step="1" style="margin-right: 50px;">
                             <div class="inner-circle"></div>
                             <dotlottie-player 
                                 src="https://lottie.host/f99546d9-f31e-4095-b29e-5a4cb5245f4d/lFvgJghGuM.json" 
@@ -29,10 +28,10 @@
                                 autoplay>
                             </dotlottie-player>
                         </div>
-                        <div class="arrow">
+                        <div class="arrow" style="margin-right: 20px;">
                             <i class="bi bi-caret-right-fill"></i>
                         </div>
-                        <div class="circle" data-step="2">
+                        <div class="circle" data-step="2" style="margin-right: 50px;">
                             <div class="inner-circle"></div>
                             <dotlottie-player 
                                 src="https://lottie.host/cfcb36e4-33ec-40aa-8913-0977e5fa9d39/yOqcQm0FKO.json" 
@@ -43,7 +42,7 @@
                                 autoplay>
                             </dotlottie-player>
                         </div>
-                        <div class="arrow">
+                        <div class="arrow" style="margin-right: 20px;">
                             <i class="bi bi-caret-right-fill"></i>
                         </div>
                         <div class="circle" data-step="3">
@@ -58,31 +57,28 @@
                             </dotlottie-player>
                         </div>
                     </div>
-                    <div id="mensajePaso" class="mt-3"></div>
+                    
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div style="margin-right: 20px;">
+                            <p>Examen clasificatorio - fase 1</p>
+                        </div>
+                        <div style="margin-right: 20px;">
+                            <p>Examen clasificatorio - fase 2</p>
+                        </div>
+                        <div>
+                            <p>Arma tu horario de entrenamiento</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="text-center">
-                <p>Prepárate para el éxito en tus exámenes con nuestra avanzada plataforma de inteligencia artificial. Nuestro algoritmo utiliza las mejores prácticas educativas como la repetición espaciada, segmentación de áreas de estudio y flashcards. Practica eficazmente y prepárate completamente para el examen.</p>
-            </div>
-
             <div class="text-center my-4">
-                <!-- Determinar el texto del botón -->
-                @if ($step1Completed)
-                    <form action="{{ route('training.start_balanced') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="exam_id" value="1"> <!-- Ajusta el valor del exam_id según tu lógica -->
-                        <button type="submit" class="btn btn-primary">Continuar Clasificación</button>
-                    </form>
-                @else
-                    <form action="{{ route('training.start_balanced') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="exam_id" value="1"> <!-- Ajusta el valor del exam_id según tu lógica -->
-                        <button type="submit" class="btn btn-primary">Empezar</button>
-                    </form>
-                @endif
-            </div>
-                        
+                <form action="{{ route('training.startTraining') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="exam_id" value="1">
+                    <button type="submit" class="btn btn-warning">Empezar <i class="bi bi-arrow-right"></i></button>
+                </form>
+            </div>     
         </div>
     </div>
 </div>
