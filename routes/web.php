@@ -269,6 +269,8 @@ Route::name('training.')
         Route::get('/exams/create-balanced', [StepController::class, 'createBalanced'])->name('createBalanced');
         // Ruta para almacenar el examen balanceado.
         Route::post('/exams/store-balanced', [StepController::class, 'storeBalanced'])->name('storeBalanced');
+        Route::post('/exams/store-balanced/2', [StepController::class, 'storeBalanced2'])->name('storeBalanced2');
+
     });
 
 /**

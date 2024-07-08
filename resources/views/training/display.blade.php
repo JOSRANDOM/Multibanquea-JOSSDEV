@@ -73,12 +73,18 @@
             </div>
 
             <div class="text-center my-4">
-                <form action="{{ route('training.startTraining') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="exam_id" value="1">
-                    <button type="submit" class="btn btn-warning">Empezar <i class="bi bi-arrow-right"></i></button>
-                </form>
-            </div>     
+                @if ($userStepExists)
+                    <form action="{{ route('training.ShowDisplay') }}" method="GET">
+                        @csrf
+                        <button type="submit" class="btn btn-warning">Continuar <i class="bi bi-arrow-right"></i></button>
+                    </form>
+                @else
+                    <form action="{{ route('training.startTraining') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-warning">Empezar <i class="bi bi-arrow-right"></i></button>
+                    </form>
+                @endif
+            </div>   
         </div>
     </div>
 </div>

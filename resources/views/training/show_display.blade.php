@@ -46,8 +46,11 @@
                         </div>
                     </h5>
                     <p>Examen de 180 preguntas</p>
-                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#fase1Modal" disabled>Empezar</button>
-                </div>
+                    <form action="{{ route('training.storeBalanced2') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="NORMAL">
+                        <button type="submit" class="btn btn-primary">Empezar</button>
+                    </form>                </div>
             </div>
         </div>
         <!-- Card 3: Calendario de Entrenamiento -->

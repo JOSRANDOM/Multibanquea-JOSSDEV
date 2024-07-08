@@ -31,9 +31,11 @@ class TrainingController extends Controller
 
     public function display()
     {
-
-        return view('training.display');
-    }
+        $user = Auth::user();
+        $userStepExists = UserStep::where('user_id', $user->id)->exists();
+    
+        return view('training.display', ['userStepExists' => $userStepExists]);
+    }    
 
     public function startTraining(Request $request)
     {
