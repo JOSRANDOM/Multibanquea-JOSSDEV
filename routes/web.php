@@ -34,6 +34,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Pages\SerumController;
 use App\Http\Controllers\performanceController;
+use App\Http\Controllers\StepController;
 use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -256,11 +257,18 @@ Route::name('training.')
         Route::get('/training/show/display', [TrainingController::class, 'ShowDisplay'])->name('ShowDisplay');
         Route::post('/training/startTraining', [TrainingController::class, 'startTraining'])->name('startTraining');
 
+        Route::post('/training/start', [TrainingController::class, 'start'])->name('start');
 
         Route::get('training/show/{id}', [performanceController::class, 'showQuestion'])->name('show');
         Route::get('training/store', [performanceController::class, 'store'])->name('store');
         Route::get('training/storeAnswer', [performanceController::class, 'storeAnswer'])->name('storeAnswer');
-        //Route::get('training/entrenamiento', [performanceController::class, 'training'])->name('training');
+
+        //STEP CONTROLLER
+
+        // Ruta para mostrar la vista de creación de examen balanceado.
+        Route::get('/exams/create-balanced', [StepController::class, 'createBalanced'])->name('createBalanced');
+        // Ruta para almacenar el examen balanceado.
+        Route::post('/exams/store-balanced', [StepController::class, 'storeBalanced'])->name('storeBalanced');
     });
 
 /**

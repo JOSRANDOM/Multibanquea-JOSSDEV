@@ -26,7 +26,11 @@
                         </div>
                     </h5>
                     <p>Examen de 180 preguntas</p>
-                    <a href="" class="btn btn-primary">Empezar</a>
+                    <form action="{{ route('training.storeBalanced') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="NORMAL">
+                        <button type="submit" class="btn btn-primary">Empezar</button>
+                    </form>
                 </div>
             </div>
         </div>

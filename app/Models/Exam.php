@@ -132,8 +132,14 @@ class Exam extends Model
      */
     public function getProgress()
     {
-        return round($this->answered_questions->count() / $this->questions->count() * 100);
+        // Verifica si hay preguntas disponibles para contar
+        if ($this->questions->count() > 0) {
+            return round($this->answered_questions->count() / $this->questions->count() * 100);
+        } else {
+            return 0; // O cualquier valor predeterminado que consideres adecuado cuando no hay preguntas
+        }
     }
+    
 
     public function getProgressNumber()
     {

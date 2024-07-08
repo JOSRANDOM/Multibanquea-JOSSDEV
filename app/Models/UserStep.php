@@ -16,6 +16,7 @@ class UserStep extends Model
         'step_1',
         'step_2',
         'step_3',
+        'exams_id',
         'created_at',
         'created_by',
         'updated_at',

@@ -36,25 +36,63 @@ class TrainingController extends Controller
     }
 
     public function startTraining(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // Crear o actualizar el registro de UserStep
-    UserStep::updateOrCreate(
-        ['user_id' => $user->id],
-        [
-            'step_1' => 0,
-            'step_2' => 0,
-            'step_3' => 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
-        ]
-    );
+        // Crear o actualizar el registro de UserStep
+        UserStep::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'step_1' => 0,
+                'step_2' => 0,
+                'step_3' => 0,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+            ]
+        );
 
-    return redirect()->route('training.ShowDisplay')->with('success', 'Pasos actualizados correctamente.');
-}
+        return redirect()->route('training.ShowDisplay')->with('success', 'Pasos actualizados correctamente.');
+    }
+
+    public function start(Request $request)
+    {
+        $user = Auth::user();
+    
+        // Crear o actualizar el registro de UserStep
+        UserStep::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'step_1' => 1, // Marcar el paso 1 como completado
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+            ]
+        );
+    
+        // Obtener una categoría de preguntas para el examen (aquí asumo que hay una categoría específica que quieres usar)
+        $questionCategory = QuestionCategory::findOrFail($category_id); // Reemplaza $category_id con el ID de la categoría deseada
+    
+        // Aquí se asume que el número de preguntas y otras configuraciones se manejan según tus requisitos
+        $numberOfQuestions = 180; // Número de preguntas para el examen balanceado
+    
+        // Crear el examen
+        $exam = Exam::create([
+            'public_id' => Str::uuid(),
+            'question_category_id' => $questionCategory->id,
+            'type' => 'balanced', // Tipo de examen (puedes ajustar esto según tus necesidades)
+            'user_id' => $user->id,
+            'sharing_token' => Str::random(12),
+        ]);
+    
+        // Agregar preguntas aleatorias al examen
+        $questions = $this->createBalanced($questionCategory, $numberOfQuestions);
+        $exam->questions()->attach($questions);
+    
+        return redirect()->route('exams.show', ['exam' => $exam])->with('success', 'Examen balanceado iniciado correctamente');
+    }
 
     public function trainingIA(Request $request)
     {
@@ -123,7 +161,7 @@ class TrainingController extends Controller
             UserStep::create([
                 'user_id' => $user->id,
                 'step_1' => 1,
-                'step_2' => 1,
+                'step_2' => 0,
                 'created_by' => $user->id,
                 'updated_by' => $user->id,
             ]);
