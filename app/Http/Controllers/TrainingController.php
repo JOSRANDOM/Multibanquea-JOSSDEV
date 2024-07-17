@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\UserActivityLog;
 use App\Models\ActivityType;
 use App\Models\QuestionSubcategory;
+use App\Models\Training;
 use App\Models\UserStep;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +25,23 @@ class TrainingController extends Controller
         return view('training.index', ['response' => $response]);
     }
 
-    public function ShowDisplay (){
-
-        return view('training.show_display');
+    public function ShowDisplay()
+    {
+        $user = Auth::user();
+        $userStep = UserStep::where('user_id', $user->id)->first();
+    
+        // Verificar si el usuario tiene registros en la tabla 'training'
+        $trainingExists = Training::where('user_id', $user->id)->exists();
+    
+        return view('training.show_display', [
+            'userStepExists' => $userStep !== null,
+            'step1' => $userStep ? $userStep->step_1 : 0,
+            'step2' => $userStep ? $userStep->step_2 : 0,
+            'step3' => $userStep ? $userStep->step_3 : 0,
+            'trainingExists' => $trainingExists, // Pasar la variable a la vista
+        ]);
     }
+    
 
     public function display()
     {
@@ -48,6 +62,7 @@ class TrainingController extends Controller
                 'step_1' => 0,
                 'step_2' => 0,
                 'step_3' => 0,
+                'exams_id' => 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'created_by' => $user->id,

@@ -97,7 +97,7 @@ class PerformanceController extends Controller
                 INNER JOIN " . $dbName . ".question_subcategories AS subcategorias ON preguntas.question_subcategory_id = subcategorias.id
             WHERE
                 examenes.user_id = :user_id
-            ", ['user_id' => $userId]);
+                ", ['user_id' => $userId]);
     
         // Formatear los resultados en el formato JSON requerido
         $formattedResults = [];
@@ -118,15 +118,10 @@ class PerformanceController extends Controller
         // Realizar la solicitud a la API
         $response = Http::post($url, $formattedResults);
     
-        // Verificar si la respuesta tiene datos
-        $responseData = $response->json();
-        $hasData = !empty($responseData);
-    
         // Retornar la vista con los datos y la respuesta del servicio
         return view('training.IA', [
             'formattedResults' => $formattedResults,
-            'responseData' => $responseData,
-            'hasData' => $hasData
+            'response' => $response
         ]);
     }
     
@@ -174,8 +169,33 @@ class PerformanceController extends Controller
         return view('training.training1', compact('questions', 'totalQuestions', 'answeredCount', 'fecha'));
     }    
 
-    public function store(){
+    public function store(Request $request)
+    {
+        // Validar la solicitud
+        $request->validate([
+            'user_id' => 'required|integer',
+            'date_training' => 'required|date',
+            'event_ids' => 'required|array',
+            'event_ids.*' => 'integer',
+        ]);
 
+        $userId = Auth::id(); // Obtén el ID del usuario autenticado
+
+        // Crear el evento en la base de datos
+        foreach ($request->event_ids as $eventId) {
+            Training::create([
+                'user_id' => $request->user_id,
+                'date_training' => $request->date_training,
+                'created_at' => now(),
+                'created_by' => $userId,
+                'updated_at' => now(),
+                'updated_by' => $userId,
+                'id_category' => $eventId,
+            ]);
+        }
+
+        // Retornar una respuesta exitosa
+        return response()->json(['message' => 'Eventos almacenados correctamente'], 200);
     }
 
     public function storeAnswer(Request $request)
@@ -228,8 +248,24 @@ class PerformanceController extends Controller
     
         return view('training.show', compact('question', 'totalQuestions', 'currentQuestionIndex', 'trainingTitle'));
     }
+
+    public function showCalendar(){
+
+        $userId = Auth::id(); // Obtén el ID del usuario autenticado
+        $trainings = Training::where('user_id', $userId)->get(); // Filtra por user_id
+
+        return view('training.show_calendar', compact('trainings'));
+
+    }
     
-    
+    public function deleteAll()
+    {
+        $userId = Auth::id(); // Obtén el ID del usuario autenticado
+        Training::where('user_id', $userId)->delete(); // Elimina todos los eventos del usuario
+
+        return response()->json(['message' => 'Eventos eliminados correctamente'], 200);
+    }
+
     
     
 }

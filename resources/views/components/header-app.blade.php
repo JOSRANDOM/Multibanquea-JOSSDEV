@@ -1,6 +1,9 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap py-2 px-3" style="background: linear-gradient(90deg, #02555b, #01191b);">
     <a class="navbar-brand p-0" href="{{ route('home') }}" title="Ir a la página principal">
         <img src="{{ asset('/img/brand/' . config('variant.name') . '/logo-white-300.png') }}" alt="{{ config('app.name') }}" height="30">
+        @if (Auth::user()->mode_test == 1)
+        <span class="badge bg-warning text-dark ms-2">Modo Test</span>
+        @endif
     </a>
 
     <div>

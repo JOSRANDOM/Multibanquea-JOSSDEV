@@ -244,11 +244,13 @@ Route::name('my-account.')
 Route::name('training.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/IA', [performanceController::class, 'IA'])->name('IA');
+        Route::get('/IA', [performanceController::class, 'SendAI'])->name('IA');
         Route::get('/IA/training/{id}/{fecha}', [performanceController::class, 'training'])->name('training');
         Route::get('/IA/statistics', [performanceController::class, 'statistics'])->name('statistics');
         Route::get('/training',[TrainingController::class,'index'])->name('index');
         Route::get('/trainingstep1', [PerformanceController::class, 'trainingstep1'])->name('trainingstep1');
+        Route::get('/show/calendar', [PerformanceController::class, 'showCalendar'])->name('showCalendar');
+
 
         Route::get('/training/display',[TrainingController::class,'display'])->name('display');
         Route::post('/training/balance', [TrainingController::class, 'startBalancedExam'])->name('start_balanced');
@@ -260,8 +262,12 @@ Route::name('training.')
         Route::post('/training/start', [TrainingController::class, 'start'])->name('start');
 
         Route::get('training/show/{id}', [performanceController::class, 'showQuestion'])->name('show');
-        Route::get('training/store', [performanceController::class, 'store'])->name('store');
+        Route::post('training/store', [performanceController::class, 'store'])->name('store');
         Route::get('training/storeAnswer', [performanceController::class, 'storeAnswer'])->name('storeAnswer');
+
+
+        //CRUD - CALENDAR
+        Route::delete('/training/delete-all', [performanceController::class, 'deleteAll'])->name('deleteAll');
 
         //STEP CONTROLLER
 

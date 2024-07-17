@@ -21,7 +21,11 @@
                     <h5 class="card-title d-flex justify-content-between">
                         Examen de Clasificación Fase 1
                         <div>
-                            <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @if ($step1 == 1)
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle"></i> Realizado</span>
+                            @else
+                                <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @endif
                             <span class="badge bg-success text-white"><i class="bi bi-info-circle"></i></span>
                         </div>
                     </h5>
@@ -29,7 +33,7 @@
                     <form action="{{ route('training.storeBalanced') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="NORMAL">
-                        <button type="submit" class="btn btn-primary">Empezar</button>
+                        <button type="submit" class="btn btn-primary" @if ($step1 == 1) disabled @endif>Empezar</button>
                     </form>
                 </div>
             </div>
@@ -41,7 +45,11 @@
                     <h5 class="card-title d-flex justify-content-between">
                         Examen de Clasificación Fase 2
                         <div>
-                            <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @if ($step2 == 1)
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle"></i> Realizado</span>
+                            @else
+                                <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @endif
                             <span class="badge bg-success text-white"><i class="bi bi-info-circle"></i></span>
                         </div>
                     </h5>
@@ -49,8 +57,9 @@
                     <form action="{{ route('training.storeBalanced2') }}" method="POST">
                         @csrf
                         <input type="hidden" name="type" value="NORMAL">
-                        <button type="submit" class="btn btn-primary">Empezar</button>
-                    </form>                </div>
+                        <button type="submit" class="btn btn-primary" @if ($step1 == 0 || $step2 == 1) disabled @endif>Empezar</button>
+                    </form>
+                </div>
             </div>
         </div>
         <!-- Card 3: Calendario de Entrenamiento -->
@@ -60,11 +69,23 @@
                     <h5 class="card-title d-flex justify-content-between">
                         Calendario de Entrenamiento
                         <div>
-                            <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @if ($step3 == 1)
+                                <span class="badge bg-success text-white"><i class="bi bi-check-circle"></i> Realizado</span>
+                            @else
+                                <span class="badge bg-warning text-dark"><i class="bi bi-question-octagon"></i> Pendiente</span>
+                            @endif
                             <span class="badge bg-success text-white"><i class="bi bi-info-circle"></i></span>
                         </div>
                     </h5>
-                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#fase2Modal" disabled>Empezar</button>
+                    @if ($trainingExists)
+                        <form action="{{ route('training.showCalendar') }}" method="GET">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fase2Modal">Continuar Entrenamiento</button>
+                        </form>
+                    @else
+                        <form action="{{ route('training.IA') }}" method="GET">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fase2Modal" @if ($step1 != 1 || $step2 != 1) disabled @endif>Empezar</button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -89,7 +110,7 @@
     </div>
 </div>
 
-<!-- Modal for Fase 2 -->
+{{-- <!-- Modal for Fase 2 -->
 <div class="modal fade" id="fase2Modal" tabindex="-1" aria-labelledby="fase2ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -105,6 +126,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 @endsection

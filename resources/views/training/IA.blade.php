@@ -49,6 +49,37 @@
                                     </div>
                                 @endforeach
                             </div>
+        
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <p class="mb-1">¿Cuántos meses deseas entrenar?</p>
+                                </div>
+                            </div>
+        
+                            <!-- Agregar las tarjetas -->
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">1/5 mes</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">3 meses</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">6 meses</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -57,6 +88,7 @@
                 </div>
             </div>
         </div>
+        
 
         <!-- Modal para falta de datos -->
         <div class="modal fade" id="noDataModal" tabindex="-1" aria-labelledby="noDataModalLabel" aria-hidden="true">
@@ -224,6 +256,25 @@
                 $('#daysModal').modal('show');
                 $('#confirmDeleteModal').modal('hide');
             });
+
+            $('#confirmDeleteBtn').click(function() {
+        $.ajax({
+            url: "{{ route('training.deleteAll') }}",
+            type: "DELETE",
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                console.log('Eventos eliminados correctamente.');
+                calendar.removeAllEvents();
+                $('#daysModal').modal('show');
+                $('#confirmDeleteModal').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al eliminar eventos:', error);
+            }
+        });
+    });
         });
     </script>
     @endsection
